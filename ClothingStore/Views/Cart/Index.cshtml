@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+@model List<ClothingStore.Models.ViewModel.UserCartViewModel>
+<br />
+
+@{
+    double total = 0;
+    foreach (var item in Model)
+    {
+        total += (item.Product.Cost * item.Quantity);
+    }
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <span class="pull-right">(<strong>@Model.Count</strong>) items</span>
+                        <h5>Items in your cart</h5>
+                    </div>
+
+
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table class="table shoping-cart-table">
+
+                                    <tbody>
+                                        <tr>
+                                            <td width="90">
+                                                <div class="cart-product-imitation">
+                                                    <img src=" @Model[i].Product.ProductImageURL" width="90" />
+                                                </div>
+                                            </td>
+                                            <td class="desc" width="500">
+                                                <h3>
+                                                    <a href="#" class="text-navy">
+                                                        @Model[i].Product.ProductName
+                                                    </a>
+                                                </h3>
+                                                <p class="small">
+                                                    @Model[i].Product.ProductDescription
+                                                </p>
+
+                                                <div class="m-t-sm">
+
+                                                    <a href="/Cart/DeleteCart?ProductID=@Model[i].Product.ProductID" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <strong> $@Model[i].Product.Cost  </strong>
+                                            </td>
+                                            <td width="100">
+                                                <input type="number" min="1" max="15" id="quantity_@i" class="form-control" value="@Model[i].Quantity">
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    <Strong>$@(Model[i].Quantity * Model[i].Product.Cost)</Strong>
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="ibox-content">
+
+
+                        <button class="btn btn-white hBack"><i class="fa fa-arrow-left"></i> Continue shopping</button>
+
+                        <button id="btn_submit" class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cart Summary</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Total:
+                            <strong>
+                                $@total
+                            </strong>
+                        </span>
+                        <h2 class="font-bold">
+                        </h2>
+
+                        <hr>
+                        <span class="text-muted small">
+                            include some description of check out
+                        </span>
+                        <br />
+                        <br />
+                        <div class="m-t-sm">
+                            <div class="btn-group">
+                                <button class="btn btn-primary " id="btn_update"> Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".hBack").on("click", function (e) {
+        e.preventDefault();
+        window.history.back();
+    });
+
+
+    $(document).ready(function () {
+        $("#btn_submit").click(function () {
+            btn_submit();
+        });
+        $("#btn_update").click(function () {
+            btn_update();
+        });
+
+    });
+
+    function btn_update() {
+        var quantity = "";
+        var funtionCount = '@Model.Count';
+        for (var i = 0; i < parseInt(funtionCount, 10); i++) {
+            quantity += $("#quantity_" + i).val() + "_";
+        }
+
+        var data = {
+            Quantity: quantity
+        };
+
+
+        $.ajax({
+            type: "GET", // GET / POST / DELETE
+            cache: false,
+            url: "/Cart/CartUpdate",
+            data: data,    // multiple data sent using ajax
+            success: function (data) {
+                var res = data.ResponseCode;
+                var des = data.Description;
+
+                alert(des);
+                setTimeout(function () {
+                    window.location.href = "/Cart/Index";
+                }, 1000);
+
+            }
+        });
+    }
+
+
+    function btn_submit() {
+        var quantity = "";
+        var funtionCount = '@Model.Count';
+        for (var i = 0; i < parseInt(funtionCount, 10); i++) {
+            quantity += $("#quantity_" + i).val() + "_";
+        }
+
+        var data = {
+            Quantity: quantity
+        };
+        $.ajax({
+            type: "GET", // GET / POST / DELETE
+            cache: false,
+            url: "/Cart/CheckOut",
+            data: data,    // multiple data sent using ajax
+            success: function (data) {
+                var res = data.ResponseCode;
+                var des = data.Description;
+
+                alert(des);
+                setTimeout(function () {
+                    window.location.href = "/Order/Index";
+                }, 1000);
+
+            }
+        });
+    }
+
+
+
+
+</script>
+
+

@@ -1,0 +1,117 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/Login.css" rel="stylesheet" />
+</head>
+<body class="img js-fullheight" style="background-image: url('../../Content/img/bg.jpg');">
+    <section class="ftco-section">
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Login</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+                        <h3 class="mb-4 text-center">Have an account?</h3>
+                        <br />
+                        <form action="/Unauthenticate/LoginCheck">
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Username" name="UserAccount" required>
+                            </div>
+
+                            <br />
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password" name="UserPassword" required>
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            </div>
+
+                            <br />
+                            <div class="form-group">
+                                <button id="btn_submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+                            </div>
+                            <br />
+                            <div class="form-group d-md-flex">
+                                @*<div class="w-50 text-md-right">
+                                    <a href="#" style="color: #ffd800">Forgot Password</a>
+
+
+                                </div>*@
+                                <div class="w-100 text-md-right">
+                                    <a href="/Unauthenticate/Register" style="color: #ffd800">Create An Account</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+@*<script>
+        $(document).ready(function () {
+            $("#btn_submit").click(function () {
+                btn_submit();
+            });
+        });
+
+        function btn_submit() {
+            var useraccount = $("#useraccount").val();
+            var userpassword = $("#userpassword").val();
+
+            var data = {
+                useraccount: useraccount,
+                userpassword: userpassword
+            };
+
+
+            $.ajax({
+                type: "get", // get / post / delete
+                cache: false,
+                url: "/unauthenticate/logincheck",
+                data: data,    // multiple data sent using ajax
+                success: function (data) {
+                    var res = data.responsecode;
+                    var des = data.description;
+
+                    alert(des);
+                    settimeout(function () {
+                        window.location.href = '/Product/Index';
+                    }, 1000);
+
+                }
+            });
+        }
+    </script>*@

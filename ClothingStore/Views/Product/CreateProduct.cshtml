@@ -1,0 +1,38 @@
+﻿@model List<DataAccess.DTO.CategoryDTO>
+@{
+    ViewBag.Title = "CreateProduct";
+
+}
+<h2>Create New Product</h2>
+
+<form action="/Product/InsertProduct">
+    <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" name="ProductName" class="form-control" placeholder="Product Name">
+    </div>
+    <div class="form-group">
+        <label>Cost</label>
+        <input type="text" name="Cost" class="form-control" placeholder="Cost">
+    </div>
+    <div class="form-group">
+        <label>Product Description</label>
+        <input type="text"  name="ProductDescription" class="form-control" placeholder="Product Description">
+    </div>
+    <div class="form-group">
+        <label>Product Image</label>
+        <input type="text"   name="ProductImage" class="form-control" placeholder="Product Image">
+    </div>
+
+    <select name="CategoryName" class="custom-select" aria-label="multiple select example">
+        <option selected>Category</option>
+        @foreach (var item in Model)
+        {
+            <option value="@item.CategoryName" >@item.CategoryName</option>
+        }
+        
+    </select>
+ 
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

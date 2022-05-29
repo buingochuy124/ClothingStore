@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@model List<ClothingStore.Models.ViewModel.OrderViewModel>
+@{ ViewBag.Title = "OrderRecord"; }
+
+
+<h2>You already have (@Model.Count) orders</h2>
+
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                No
+            </th>
+            <th>
+                User Name
+            </th>
+            <th>
+                User Address
+            </th>
+
+            <th>
+                Total
+            </th>
+            <th>
+                Date
+            </th>
+
+            <th>
+                Order Detail
+            </th>
+
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+
+
+            <tr>
+
+                <td>
+                    <strong></strong>
+
+                    @(i+1)
+                </td>
+                <td>
+                    <strong>
+                        @Model[i].User.UserFullName
+                    </strong>
+                </td>
+                <td>
+                    <strong>
+                        @Model[i].User.UserAddress
+                    </strong>
+
+                </td>
+                <td>
+                    <strong>
+                        @Model[i].Total
+                    </strong>
+
+                </td>
+                <td>
+                    <strong>
+                        @Model[i].Date
+                    </strong>
+
+                </td>
+                <td>
+                    <a href="/Order/OrderDetail?OrderID=@Model[i].OrderID&Date=@Model[i].Date">Detail</a>
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });</script>
+

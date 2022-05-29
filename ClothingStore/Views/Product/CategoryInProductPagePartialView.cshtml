@@ -1,0 +1,24 @@
+﻿
+@model List<DataAccess.DTO.CategoryDTO>
+@{ 
+    var user = (DataAccess.DTO.UserDTO)ViewBag.user;
+
+}
+
+@if (user != null)
+{
+
+
+    if (user.RoleID == 1)
+    {
+        <a class="btn btn-primary" href="/Product/CreateProductCategory" role="button">Create new Category</a>
+    }
+
+}
+
+@foreach (var item in Model)
+{
+    <li>
+        <a href="/Product/ProductCategory?CategoryName=@item.CategoryName"><i class="fa fa-angle-right"></i>@item.CategoryName</a>
+    </li>
+}

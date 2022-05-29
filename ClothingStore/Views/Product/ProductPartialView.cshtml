@@ -1,0 +1,108 @@
+﻿
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/ProductDisplay.css" rel="stylesheet" />
+
+
+@model List<ClothingStore.Models.ViewModel.ProductViewModel>
+
+@{
+    var a = 3;
+    var n = Model.Count;
+    var nRow = (int)Math.Ceiling((double)Model.Count / a);
+    var user = (DataAccess.DTO.UserDTO)ViewBag.user;
+
+}
+
+
+<div class="container bootdey">
+    <div class="col-md-3">
+        <section class="panel">
+            <header class="panel-heading">
+                Category
+            </header>
+            <div class="panel-body">
+
+                <ul class="nav prod-cat">
+                    @Html.Action("CategoryInProductPagePartialView")
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-9">
+
+
+        <section class="panel">
+            <div class="panel-body">
+                <div class="pull-left">
+                    @if (user != null)
+                    {
+
+
+                        if (user.RoleID == 1)
+                        {
+                            <a class="btn btn-primary" href="/Product/CreateProduct" role="button">Add new product</a>
+
+                        }
+
+                    }
+                </div>
+
+
+                <div class="pull-right">
+                    <ul class="pagination pagination-sm pro-page-list">
+                        <li value="submit" class="page-item"><a class="page-link" href="/Product/Index?PageNumber=1&NumberPerPage=@ViewBag.NumberPerPage">First</a></li>
+
+                        @{ if (ViewBag.CurrentPage != 1)
+                            {
+                                <li value="submit" class="page-item"><a class="page-link" href="/Product/Index?PageNumber=@(ViewBag.CurrentPage-1)&NumberPerPage=@ViewBag.NumberPerPage">@(ViewBag.CurrentPage - 1)</a></li>
+                            } }
+                        <li value="submit" class="page-item active"><a class="page-link" href="/Product/Index?PageNumber=@ViewBag.CurrentPage&NumberPerPage=@ViewBag.NumberPerPage">@ViewBag.CurrentPage</a></li>
+
+                        @{ if (ViewBag.CurrentPage < (@ViewBag.EndPage - 1))
+                            {
+                                <li value="submit" class="page-item"><a class="page-link" href="/Product/Index?PageNumber=@(ViewBag.CurrentPage+1)&NumberPerPage=@ViewBag.NumberPerPage">@(ViewBag.CurrentPage + 1)</a></li>
+                            } }
+                        <li value="submit" class="page-item"><a class="page-link" href="/Product/Index?PageNumber=@(ViewBag.EndPage-1)&NumberPerPage=@ViewBag.NumberPerPage">End</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="row product-list">
+
+
+            @for (int i = 0; i < nRow; i++)
+            {
+                <div class="row product-list">
+                    @{ var target = (i + 1) * a < n ? (i + 1) * a : n; }
+                    @for (int j = (i * a); j < target; j++)
+                    {
+                        <div class="col-sm-4">
+                            <section class="panel">
+                                <div class="pro-img-box">
+                                    <img src="@Model[j].ProductImageURL" alt="" />
+                                    <a href="/Product/AddToCart?ProductID=@Model[j].ProductID" class="adtocart">
+                                        <i class="fa fa-shopping-cart"></i>
+
+                                    </a>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <h4>
+                                        <a href="#" class="pro-title">
+                                            @Model[j].ProductName
+                                        </a>
+                                    </h4>
+                                    <p class="price">@Model[j].Cost VND</p>
+
+                                </div>
+
+                            </section>
+                        </div>
+                    }
+                </div>
+                <br />
+            }
+        </div>
+    </div>
+</div>
+

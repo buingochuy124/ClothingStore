@@ -1,0 +1,86 @@
+﻿@model List<ClothingStore.Models.ViewModel.OrderDetailViewModel>
+@{ ViewBag.Title = "OrderDetail";
+    double total = 0;
+    foreach (var item in Model)
+    {
+        total += item.Product.Cost * item.Quantity;
+    } }
+
+<br />
+
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+
+            <th>
+                No
+            </th>
+            <th>
+                Product Image
+            </th>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Quantity
+            </th>
+
+            <th>
+                Cost
+            </th>
+            <th>
+
+            </th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+<tr>
+    <td>
+        @(i+1)
+    </td>
+    <td>
+        <img src=" @Model[i].Product.ProductImageURL" width="50" height="60">
+
+
+    </td>
+    <td>
+        <strong>
+            @Model[i].Product.ProductName
+        </strong>
+    </td>
+    <td>
+        <strong>
+            @Model[i].Quantity
+        </strong>
+
+    </td>
+    <td>
+        <strong>
+            $@Model[i].Product.Cost
+        </strong>
+
+    </td>
+    <td>
+        <strong>
+            $@(Model[i].Quantity * Model[i].Product.Cost)
+        </strong>
+
+    </td>
+</tr>}
+
+    </tbody>
+</table>
+<h2><strong> Total: $@total </strong></h2>
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });</script>
+
